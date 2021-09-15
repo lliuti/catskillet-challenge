@@ -1,6 +1,5 @@
 import { getCustomRepository } from "typeorm";
 import { Todo } from "../../entities/Todo";
-import { TodoRepository } from "../../repositories/TodoRepository";
 
 class ListTodoUseCase {
   private todoRepository;

@@ -1,11 +1,13 @@
 import { Request, Response } from "express";
+import { TodoRepository } from "../../repositories/TodoRepository";
 import { DeleteTodoUseCase } from "./DeleteTodoUseCase";
 
 class DeleteTodoController {
   async handle(request: Request, response: Response) {
     const { id } = request.params;
 
-    const deleteTodoUseCase = new DeleteTodoUseCase();
+    const todoRepository = new TodoRepository();
+    const deleteTodoUseCase = new DeleteTodoUseCase(todoRepository);
     try {
       await deleteTodoUseCase.execute(id);
       return response.status(204).send();
