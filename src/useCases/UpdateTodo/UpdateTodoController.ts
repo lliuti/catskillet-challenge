@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { TodoRepository } from "../../repositories/TodoRepository";
 import { UpdateTodoUseCase } from "./UpdateTodoUseCase";
 
 class UpdateTodoController {
@@ -6,7 +7,8 @@ class UpdateTodoController {
     const { id } = request.params;
     const { title, description, done } = request.body;
 
-    const updateTodoUseCase = new UpdateTodoUseCase();
+    const todoRepository = new TodoRepository();
+    const updateTodoUseCase = new UpdateTodoUseCase(todoRepository);
 
     try {
       const todo = await updateTodoUseCase.execute({
