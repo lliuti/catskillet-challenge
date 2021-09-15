@@ -1,17 +1,24 @@
 import { getCustomRepository } from "typeorm";
-import { TodoRepository } from "../../repositories/TodoRepository";
 
 class DeleteTodoUseCase {
-  async execute(id: string): Promise<void> {
-    const todoRepository = getCustomRepository(TodoRepository);
+  private todoRepository;
 
-    const doesTodoExist = todoRepository.findOne(id);
+  constructor(customRepository) {
+    if (customRepository.type === "MemoryRepository") {
+      this.todoRepository = customRepository;
+    } else {
+      this.todoRepository = getCustomRepository(customRepository);
+    }
+  }
+
+  async execute(id: string): Promise<void> {
+    const doesTodoExist = await this.todoRepository.findOne(id);
 
     if (!doesTodoExist) {
       throw new Error("Todo not found");
     }
 
-    await todoRepository.delete(id);
+    await this.todoRepository.delete(id);
   }
 }
 
