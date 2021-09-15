@@ -33,7 +33,10 @@ class TodoMemoryRepository {
 
   async save(): Promise<void> {}
 
-  delete() {}
+  async delete(id: string): Promise<void> {
+    const target = this.storedTodos.findIndex((todo) => todo.id === id);
+    this.storedTodos.splice(target, 1);
+  }
 }
 
 export { TodoMemoryRepository };
