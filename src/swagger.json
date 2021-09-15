@@ -1,0 +1,154 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "CatSkillet Challenge",
+    "description": "NodeJS + Typescript API Challenge",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/todos": {
+      "get": {
+        "tags": ["ToDo"],
+        "summary": "List ToDo's",
+        "description": "Lists all stored ToDo's.",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "title": {
+                        "type": "string"
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "done": {
+                        "type": "boolean"
+                      },
+                      "created_at": {
+                        "type": "string"
+                      },
+                      "updated_at": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["ToDo"],
+        "summary": "Create new ToDo",
+        "description": "Adds a new ToDo if there is none with the same title.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "done": {
+                    "type": "boolean"
+                  }
+                },
+                "example": {
+                  "title": "Todo Title example",
+                  "description": "Description example",
+                  "done": "false"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Failed to create new ToDo"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["ToDo"],
+        "summary": "Delete ToDo's",
+        "description": "Remove ToDo from database where ID is the same as the received in route params.",
+        "responses": {
+          "204": {
+            "description": "Deleted"
+          },
+          "400": {
+            "description": "Failed to delete"
+          }
+        }
+      }
+    },
+    "/todos/{id}": {
+      "put": {
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "description": "ToDo id",
+            "required": "true"
+          }
+        ],
+        "tags": ["ToDo"],
+        "summary": "Update ToDo",
+        "description": "Update ToDo with given properties if it does exist.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "done": {
+                    "type": "boolean"
+                  }
+                },
+                "example": {
+                  "title": "Todo new Title example",
+                  "description": "Updated description example",
+                  "done": "true"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Failed to update ToDo"
+          }
+        }
+      }
+    }
+  }
+}
