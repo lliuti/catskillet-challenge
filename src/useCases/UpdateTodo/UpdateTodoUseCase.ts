@@ -3,21 +3,29 @@ import { TodoRepository } from "../../repositories/TodoRepository";
 import { IUpdateTodoDTO } from "./UpdateTodoDTO";
 
 class UpdateTodoUseCase {
+  private todoRepository;
+
+  constructor(customRepository) {
+    if (customRepository.type === "MemoryRepository") {
+      this.todoRepository = customRepository;
+    } else {
+      this.todoRepository = getCustomRepository(customRepository);
+    }
+  }
+
   async execute({
     id,
     title,
     description,
     done,
   }: IUpdateTodoDTO): Promise<void> {
-    const todoRepository = getCustomRepository(TodoRepository);
-
-    const doesTodoExist = todoRepository.findOne(id);
+    const doesTodoExist = await this.todoRepository.findOne(id);
 
     if (!doesTodoExist) {
       throw new Error("Todo not found");
     }
 
-    await todoRepository.save({ id, title, description, done });
+    await this.todoRepository.save({ id, title, description, done });
   }
 }
 
