@@ -2,6 +2,8 @@
 
 NodeJS + Typescript API from CatSkillet backend challenge
 
+![Todo list](https://image.freepik.com/free-vector/people-making-list-illustration_53876-43029.jpg)
+
 ## How to install
 
 Clone this repository: https://github.com/lliuti/catskillet-challenge.git
